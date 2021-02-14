@@ -24,14 +24,16 @@ class resizeBreadcrumbs {
         const windowWidth = window.innerWidth;
         let dataWidth = this.crumbItemsStartWidth;
         let i = 0;
-        if (this.getCrumbsWidth() < this.crumbItemsWidth) {
-            while(this.getCrumbsWidth() < this.crumbItemsWidth) {
-                let el = this.getMaxOfArray(this.crumbItemArray);
-                let index = this.crumbItemArray.indexOf(el);
-                this.changeCrumbText(index, windowWidth, this.divider);
-                this.dataResize[i].width = dataWidth + 75;
-                dataWidth = this.getCrumbItemsWidth();
-                i++;    
+        if (windowWidth > 499) {
+            if (this.getCrumbsWidth() < this.crumbItemsWidth) {
+                while(this.getCrumbsWidth() < this.crumbItemsWidth) {
+                    let el = this.getMaxOfArray(this.crumbItemArray);
+                    let index = this.crumbItemArray.indexOf(el);
+                    this.changeCrumbText(index, windowWidth, this.divider);
+                    this.dataResize[i].width = dataWidth + 75;
+                    dataWidth = this.getCrumbItemsWidth();
+                    i++;    
+                }
             }
         }
     }
@@ -40,21 +42,22 @@ class resizeBreadcrumbs {
         window.addEventListener('resize', () => {
             const windowWidth = window.innerWidth;
 
-            this.returnCrumbData(windowWidth);
+            if (windowWidth > 499) {
+                this.returnCrumbData(windowWidth);
 
-            if (this.getCrumbsWidth() < this.crumbItemsWidth) {
-
-                let el = this.getMaxOfArray(this.crumbItemArray);
-                let index = this.crumbItemArray.indexOf(el);
-
-                this.changeCrumbText(index, windowWidth, this.divider);
-
-            } 
-
-            if ((this.getCrumbsWidth() > this.crumbItemsStartWidth) && (this.dataResize.length !== 0)) {
-                this.startPosition();
+                if (this.getCrumbsWidth() < this.crumbItemsWidth) {
+    
+                    let el = this.getMaxOfArray(this.crumbItemArray);
+                    let index = this.crumbItemArray.indexOf(el);
+    
+                    this.changeCrumbText(index, windowWidth, this.divider);
+    
+                } 
+    
+                if ((this.getCrumbsWidth() > this.crumbItemsStartWidth) && (this.dataResize.length !== 0)) {
+                    this.startPosition();
+                }
             }
-
         })
     }
 
